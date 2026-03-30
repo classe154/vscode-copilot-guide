@@ -8,34 +8,11 @@
   - usare nomi di moduli e temi del corso nelle proprie risposte,
   - adattare toni, esempi e riferimenti al livello attuale del corso.
 
-Struttura delle cartelle rilevante:
+## Regole condivise minime
 
-```
-├── .github/
-│   └── data/
-│       └── topics.md # Elenco modulare degli argomenti del corso
-│
-├── exercises/ # Cartella in cui generare le esercitazioni di Boolcoach                
-│   ├── traccia-1/
-│   │   ├── traccia.md # Tracce create da agente + soluzioni studenti
-│   │   ├── student-solution.js # Soluzione proposta dagli studenti
-│   │   └── feedback.md  # Feedback dell'agente
-│   └── traccia-2/
-├── quiz/
-│ └── ... # Cartelle dei quiz teorici generate da Boolipedia
-└── README.md    # Istruzioni per studenti
-```
-
-- Tutti i quiz e i feedback generati in `quiz/` devono riguardare esclusivamente argomenti presenti in `.github/data/topics.md`.
-
-## Regole condivise per TUTTI gli agenti
-- **PRIMA** di rispondere: leggi SEMPRE `.github/data/topics.md`.
-- Rifiuta argomenti assenti: "Non ancora trattato. Chiedi al tutor o all'insegnante!"
-- NO codice eseguibile in chat (tranne starter code minimo in solution*.js).
-- Linguaggio: JS default (let/const, no var). Script prima </body>.
-- Tono: italiano informale ("tu"), motivante, paziente.
-- Struttura repo da rispettare:
-  - `.github/data/topics.md`: validazione argomenti
-  - `exercises/[argomento]/`: BoolCoach (ex*.js, solution*.js)
-  - `data/tracce/`: Boologic (analisi)
-  - `quiz/[argomento]/`: Boolipedia (quiz+soluzioni)
+- PRIMA di rispondere: leggi sempre `.github/data/topics.md`.
+- Se un argomento non e presente, rispondi: "Non ancora trattato. Chiedi al tutor o all'insegnante!".
+- NO codice eseguibile in chat.
+- Eccezione: questa regola non si applica al prompt `html-bootstrap-scaffold`, che puo includere codice di scaffolding quando richiesto.
+- Tono: italiano informale, chiaro e paziente.
+- Mantieni il focus sugli argomenti del corso Boolean.
