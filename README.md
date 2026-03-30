@@ -88,7 +88,7 @@ Quando usarlo:
 
 - quando vuoi regole legate al contesto del repository;
 - quando vuoi che il team condivida lo stesso comportamento dell'agente;
-- quando l'agente deve usare file dati locali (es. `.github/agents/data/topics.md`).
+- quando l'agente deve usare file dati locali (es. `.github/data/topics.md`).
 
 Pro:
 
@@ -132,10 +132,18 @@ Regola pratica:
 Nel repository `vscode-copilot-guide`, gli agenti locali sono salvati in:
 - `.github/agents/NOME_AGENTE.agent.md`
 
-Esempio in questo repository:
+Agenti presenti in questo repository:
 
+- `.github/agents/BoolCoach.agent.md`
+  Coach pratico per esercizi JavaScript, con guida senza soluzione completa.
 - `.github/agents/Booligan.agent.md`
-  Agente motivazionale per studenti del corso Boolean.
+  Supporto motivazionale con riferimenti ai topic del corso.
+- `.github/agents/Boologic.agent.md`
+  Analisi logica delle tracce passo-passo senza codice.
+- `.github/agents/Boolipedia.agent.md`
+  Supporto teorico, interrogazioni e quiz sugli argomenti trattati.
+- `.github/agents/SeverusPiton.agent.md`
+  Agente tematico con tono severo per feedback guidato.
 
 ### 2.2 Esempio di agente semplice scritto a mano
 
@@ -166,11 +174,11 @@ Comportamento:
 
 Se vuoi che l'agente lavori su un syllabus preciso, crea:
 
-- `.github/agents/data/topics.md`
+- `.github/data/topics.md`
 
 E aggiungi nel prompt dell'agente una riga tipo:
 
-- "Usa i temi presenti in `data/topics.md` per contestualizzare esempi e spiegazioni."
+- "Usa i temi presenti in `.github/data/topics.md` per contestualizzare esempi e spiegazioni."
 
 #### Perché questo esempio funziona
 
@@ -202,9 +210,9 @@ Output richiesto:
 2) Struttura obbligatoria con sezioni: Ruolo, Obiettivo, Stile, Comportamenti, Limiti.
 3) Istruzioni operative chiare e verificabili (niente frasi vaghe).
 4) Versione breve (max 25 righe) e versione estesa (max 80 righe).
-5) Una checklist finale in 8 punti per validare la qualita dell'agente.
+5) Una checklist finale in 8 punti per validare la qualità dell'agente.
 
-Vincoli di qualita:
+Vincoli di qualità:
 - italiano naturale;
 - niente contraddizioni tra stile e comportamento;
 - evitare istruzioni troppo generiche;
@@ -220,7 +228,7 @@ Prima di considerare finito un agente, verifica:
 - lo scopo e espresso in una frase chiara;
 - sono presenti stile + comportamento + limiti;
 - c'e almeno una regola per gestire richieste ambigue;
-- se usa file locali, il path e corretto;
+- se usa file locali, il path è corretto;
 - non ci sono istruzioni in conflitto;
 - la lunghezza e proporzionata (non troppo lunga);
 - l'agente produce risposte coerenti in 2-3 test reali;
@@ -352,7 +360,7 @@ Esempio di prompt che la attiva:
 Entrambi personalizzano Copilot, ma con obiettivi diversi:
 
 - `.instructions.md`: regole sempre attive sui file che corrispondono a `applyTo`.
-- `SKILL.md`: capacita specializzata caricata quando la richiesta e pertinente (o invocata da slash command).
+- `SKILL.md`: capacità specializzata caricata quando la richiesta è pertinente (o invocata da slash command).
 
 Quando scegliere uno o l'altro:
 
@@ -373,7 +381,7 @@ Per prompt di workspace usa la cartella:
 
 ### 5.2 Formato base
 
-Un prompt file usa estensione `.prompt.md` e puo avere frontmatter YAML opzionale.
+Un prompt file usa estensione `.prompt.md` e può avere frontmatter YAML opzionale.
 
 Campi utili piu comuni:
 
@@ -394,7 +402,8 @@ Nel repository `vscode-copilot-guide` è presente un prompt:
 #### 5.3.1 html-bootstrap-scaffold.prompt.md
 
 - [.github/prompts/html-bootstrap-scaffold.prompt.md](.github/prompts/html-bootstrap-scaffold.prompt.md)
-  Crea uno scaffold base di progetto web con `index.html`, `styles/index.css` e `scripts/index.js`, gia collegati e pronti all'uso con Bootstrap 5.3.8.
+  Crea uno scaffold base di progetto web con `index.html`, `styles/index.css` e `scripts/index.js`, già collegati e pronti all'uso con Bootstrap 5.3.8.
+  Nota: questo prompt è l'eccezione esplicita alla regola "NO codice eseguibile in chat" definita in `.github/copilot-instructions.md`.
 
 ### 5.3.2 Uso rapido in chat
 
@@ -410,11 +419,11 @@ Nel repository `vscode-copilot-guide` è presente un prompt:
 
 | | `copilot-instructions.md` | `.instructions.md` | `.agent.md` | `SKILL.md` | `.prompt.md` |
 |---|---|---|---|---|---|
-| Quando si attiva | sempre, su ogni richiesta | sempre, sui file che corrispondono al glob | solo quando selezioni l'agente | solo quando la richiesta e pertinente | solo quando lanci il comando slash |
+| Quando si attiva | sempre, su ogni richiesta | sempre, sui file che corrispondono al glob | solo quando selezioni l'agente | solo quando la richiesta è pertinente | solo quando lanci il comando slash |
 | Scopo | regole generali del repo | regole per tipo di file o cartella | persona specializzata con comportamento fisso | procedura step-by-step per un task specifico | task singolo riusabile in chat |
-| Formato | Markdown libero | Markdown con frontmatter `applyTo` | Markdown libero | Markdown con frontmatter `name` + `description` | Markdown con estensione `.prompt.md` (+ frontmatter opzionale) |
+| Formato | Markdown libero | Markdown con frontmatter `applyTo` | Markdown libero (consigliato frontmatter con `name`, `description`, `tools`, `user-invocable`) | Markdown con frontmatter `name` + `description` | Markdown con estensione `.prompt.md` (+ frontmatter opzionale) |
 | Percorso | `.github/copilot-instructions.md` | `.github/instructions/NOME.instructions.md` | `.github/agents/NOME.agent.md` | `.github/skills/NOME/SKILL.md` | `.github/prompts/NOME.prompt.md` |
-| Esempio in questo repo | `.github/copilot-instructions.md` | `JSComment.instructions.md` | `.github/agents/Booligan.agent.md` | `js-strict-check/SKILL.md`<br/>`js-feedback-checklist/SKILL.md` | `.github/prompts/html-bootstrap-scaffold.prompt.md` |
+| Esempio in questo repo | `.github/copilot-instructions.md` | `JSComment.instructions.md` | `BoolCoach.agent.md`<br/>`Booligan.agent.md`<br/>`Boologic.agent.md`<br/>`Boolipedia.agent.md`<br/>`SeverusPiton.agent.md` | `js-strict-check/SKILL.md`<br/>`js-feedback-checklist/SKILL.md` | `.github/prompts/html-bootstrap-scaffold.prompt.md` |
 | Esempio didattico consigliato | policy progetto | regole mirate per tipo file | tutor con ruolo fisso | `js-feedback-checklist/SKILL.md` | `html-bootstrap-scaffold.prompt.md` |
 
 ### Regola pratica per scegliere
