@@ -15,7 +15,7 @@ Il commento deve spiegare:
 Commento sulla stessa riga:
 
 ```js
-const maxTentivi = 3; // numero massimo di tentativi consentiti prima del blocco
+const maxTentativi = 3; // numero massimo di tentativi consentiti prima del blocco
 let punteggioUtente = 0; // punteggio corrente del giocatore, aggiornato a ogni risposta
 ```
 
